@@ -1,101 +1,96 @@
-import tkinter as tk
-from tkinter import messagebox, simpledialog
+import json
 from pydantic import ValidationError
 
-from ..models.Task import Task
-from .validateData import TaskModel, UpdateTaskModel
+from python.todo.models.Task import Task
+from python.todo.utils.validateData import TaskModel, UpdateTaskModel
 
 task = Task()
 
-class TaskManagerApp:
-    def __init__(self, master):
-        self.master = master
-        master.title("Task Manager")
+def display_menu():
+    print("\nTask Manager")
+    print("1. Get Tasks")
+    print("2. Get Task by ID")
+    print("3. Add Task")
+    print("4. Mark Task as Complete")
+    print("5. Update Task")
+    print("6. Delete Task")
+    print("7. Exit")
 
-        self.label = tk.Label(master, text="Task Manager")
-        self.label.pack()
+def get_tasks():
+    tasks = task.getTasks()
+    print("Tasks:", tasks)
 
-        self.get_tasks_button = tk.Button(master, text="Get Tasks", command=self.get_tasks)
-        self.get_tasks_button.pack()
-
-        self.get_task_by_id_button = tk.Button(master, text="Get Task by ID", command=self.get_task_by_id)
-        self.get_task_by_id_button.pack()
-
-        self.add_task_button = tk.Button(master, text="Add Task", command=self.add_task)
-        self.add_task_button.pack()
-
-        self.mark_complete_button = tk.Button(master, text="Mark as Complete", command=self.mark_as_complete)
-        self.mark_complete_button.pack()
-
-        self.update_task_button = tk.Button(master, text="Update Task", command=self.update_task)
-        self.update_task_button.pack()
-
-        self.delete_task_button = tk.Button(master, text="Delete Task", command=self.delete_task)
-        self.delete_task_button.pack()
-
-    def get_tasks(self):
-        tasks = task.getTasks()
-        messagebox.showinfo("Tasks", f"Tasks: {tasks}")
-
-    def get_task_by_id(self):
-        task_id = simpledialog.askstring("Input", "Enter task ID:")
-        if task_id:
-            try:
-                task_data = task.getTaskById(task_id)
-                messagebox.showinfo("Task Data", f"Task: {task_data}")
-            except Exception as e:
-                messagebox.showerror("Error", str(e))
-
-    def add_task(self):
-        title = simpledialog.askstring("Input", "Enter task title:")
-        folder = simpledialog.askstring("Input", "Enter folder (optional):") or "All"
-        description = simpledialog.askstring("Input", "Enter description:")
-
-        data = {
-            "title": title.strip(),
-            "folder": folder.strip(),
-            "description": description.strip(),
-        }
-
+def get_task_by_id():
+    task_id = input("Enter task ID: ")
+    if task_id:
         try:
-            valid_task = TaskModel(**data)
-            task.addTask(valid_task.dict())
-            messagebox.showinfo("Success", "Task added successfully!")
-        except ValidationError as e:
-            messagebox.showerror("Validation Error", e.json())
+            task_data = task.getTaskById(task_id)
+            print("Task:", task_data)
+        except Exception as e:
+            print("Error:", str(e))
 
-    def mark_as_complete(self):
-        task_id = simpledialog.askstring("Input", "Enter task ID:")
-        if task_id:
-            result = task.markTaskIsComplete(task_id)
-            messagebox.showinfo("Result", f"Task marked as complete: {result}")
+def add_task():
+    title = input("Enter task title: ")
+    folder = input("Enter folder (optional, default: All): ") or "All"
+    description = input("Enter description: ")
+    
+    data = {
+        "title": title.strip(),
+        "folder": folder.strip(),
+        "description": description.strip(),
+    }
+    
+    try:
+        valid_task = TaskModel(**data)
+        task.addTask(valid_task.dict())
+        print("Task added successfully!")
+    except ValidationError as e:
+        print("Validation Error:", e.json())
 
-    def update_task(self):
-        task_id = simpledialog.askstring("Input", "Enter task ID:")
-        title = simpledialog.askstring("Input", "Enter new title (optional):")
-        folder = simpledialog.askstring("Input", "Enter new folder (optional):") or "All"
-        description = simpledialog.askstring("Input", "Enter new description (optional):")
+def mark_as_complete():
+    task_id = input("Enter task ID: ")
+    if task_id:
+        result = task.markTaskIsComplete(task_id)
 
-        data = {
-            "title": title.strip() if title else None,
-            "folder": folder.strip(),
-            "description": description.strip() if description else None,
-        }
+def update_task():
+    task_id = input("Enter task ID: ")
+    title = input("Enter new title (optional): ").strip()
+    folder = input("Enter new folder (optional, default: All): ").strip() or "All"
+    description = input("Enter new description (optional): ").strip()
 
-        try:
-            valid_task = UpdateTaskModel(**data)
-            task.updateTaskById(valid_task.dict(), task_id)
-            messagebox.showinfo("Success", "Task updated successfully!")
-        except ValidationError as e:
-            messagebox.showerror("Validation Error", e.json())
+    data = {k: v for k, v in {"title": title, "folder": folder, "description": description}.items() if v}
 
-    def delete_task(self):
-        task_id = simpledialog.askstring("Input", "Enter task ID:")
-        if task_id:
-            task.deleteTaskById(task_id)
-            messagebox.showinfo("Success", "Task deleted successfully!")
+    try:
+        valid_task = UpdateTaskModel(**data)
+        task.updateTaskById(valid_task.dict(), task_id)
+    except ValidationError as e:
+        print("Validation Error:", e.json())
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = TaskManagerApp(root)
-    root.mainloop()
+def delete_task():
+    task_id = input("Enter task ID: ")
+    if task_id:
+        task.deleteTaskById(task_id)
+
+def user_interface():
+    while True:
+        display_menu()
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            get_tasks()
+        elif choice == "2":
+            get_task_by_id()
+        elif choice == "3":
+            add_task()
+        elif choice == "4":
+            mark_as_complete()
+        elif choice == "5":
+            update_task()
+        elif choice == "6":
+            delete_task()
+        elif choice == "7":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice, please try again.")
+

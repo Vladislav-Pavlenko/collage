@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JavaScript у дії</title>
+
+    <script>
+      function changeColorInternal() {
+        document.getElementById("text-internal").style.color = "blue";
+      }
+    </script>
+  </head>
+  <body>
+    <h2>Вбудований JavaScript (inline)</h2>
+    <p id="text-inline">Це текст з inline-обробкою.</p>
+    <button
+      onclick="document.getElementById('text-inline').style.color = 'green';"
+    >
+      Змінити колір (inline)
+    </button>
+
+    <h2>Внутрішній JavaScript (в тегу &lt;script&gt;)</h2>
+    <p id="text-internal">Це текст з внутрішнім скриптом.</p>
+    <button onclick="changeColorInternal()">Змінити колір (internal)</button>
+
+    <h2>Зовнішній JavaScript (окремий файл)</h2>
+    <p id="text-external">Це текст з зовнішнім скриптом.</p>
+    <button onclick="changeColorExternal()">Змінити колір (external)</button>
+
+    <script src="script.js"></script>
+  </body>
+</html>
