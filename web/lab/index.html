@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Метрики Холстеда</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f6f7fb;
+        padding: 20px;
+        color: #222;
+      }
+      h2 {
+        text-align: center;
+      }
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      input {
+        width: 100%;
+        padding: 6px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      button {
+        width: 100%;
+        margin-top: 15px;
+        padding: 10px;
+        background: #4caf50;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #45a049;
+      }
+      .result {
+        margin-top: 20px;
+        background: #f0f0f0;
+        padding: 15px;
+        border-radius: 5px;
+        font-family: monospace;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Обчислення метрик Холстеда</h2>
+
+      <label>η₁ (кількість різних операторів)</label>
+      <input id="eta1" type="number" placeholder="20" />
+
+      <label>η₂ (кількість різних операндів)</label>
+      <input id="eta2" type="number" placeholder="18" />
+
+      <label>N₁ (кількість операторів)</label>
+      <input id="N1" type="number" placeholder="300" />
+
+      <label>N₂ (кількість операндів)</label>
+      <input id="N2" type="number" placeholder="250" />
+
+      <label>V* (потенційний об’єм)</label>
+      <input id="Vstar" type="number" placeholder="1200" />
+
+      <label>S (число Страуда)</label>
+      <input id="S" type="number" placeholder="12" />
+
+      <label>Nком (кількість коментарів)</label>
+      <input id="Ncom" type="number" placeholder="23" />
+
+      <button onclick="calculate()">Обчислити</button>
+
+      <div class="result" id="result"></div>
+    </div>
+
+    <script src="./form.js" defer></script>
+  </body>
+</html>

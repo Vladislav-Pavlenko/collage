@@ -1,9 +1,9 @@
-const Book = {
-  title: "The Great Gatsby",
-  author: "F. Scott Fitzgerald",
-  method: function () {
-    return this.title + " by " + this.author;
-  },
+const num = 12;
+const number = (num) => {
+  if (num % 2 === 0) {
+    console.log("Число парне");
+  } else {
+    console.log("Числа непарне");
+  }
 };
-
-console.log(Book.method());
+number(num);

@@ -2,31 +2,47 @@
 <html lang="uk">
   <head>
     <meta charset="UTF-8" />
-    <title>JavaScript у дії</title>
-
-    <script>
-      function changeColorInternal() {
-        document.getElementById("text-internal").style.color = "blue";
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Сторінка 1</title>
+    <style>
+      .paragraph1 {
+        font-weight: bold;
+        color: navy;
       }
-    </script>
+      .paragraph2 {
+        font-style: italic;
+        font-size: 1.1em;
+      }
+      img {
+        max-width: 300px;
+        height: auto;
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    </style>
   </head>
   <body>
-    <h2>Вбудований JavaScript (inline)</h2>
-    <p id="text-inline">Це текст з inline-обробкою.</p>
-    <button
-      onclick="document.getElementById('text-inline').style.color = 'green';"
-    >
-      Змінити колір (inline)
-    </button>
+    <h5>Це заголовок п'ятого рівня на Сторінці 1</h5>
 
-    <h2>Внутрішній JavaScript (в тегу &lt;script&gt;)</h2>
-    <p id="text-internal">Це текст з внутрішнім скриптом.</p>
-    <button onclick="changeColorInternal()">Змінити колір (internal)</button>
+    <p class="paragraph1">
+      Це перший абзац довільного тексту на першій сторінці. Ми зробимо його
+      <strong>жирним</strong> та темно-синім для демонстрації різного
+      форматування. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </p>
 
-    <h2>Зовнішній JavaScript (окремий файл)</h2>
-    <p id="text-external">Це текст з зовнішнім скриптом.</p>
-    <button onclick="changeColorExternal()">Змінити колір (external)</button>
+    <p class="paragraph2">
+      А це другий абзац на першій сторінці. Цей текст буде <em>курсивним</em> та
+      трохи більшим. Sed do eiusmod tempor incididunt ut labore et dolore magna
+      aliqua. Ut enim ad minim veniam.
+    </p>
 
-    <script src="script.js"></script>
+    <img src="image1.jpg" alt="Опис зображення 1" />
+
+    <p>
+      <a href="page-2.html" target="_blank"
+        >Перейти на Сторінку 2 (відкрити в новому вікні)</a
+      >
+    </p>
   </body>
 </html>
